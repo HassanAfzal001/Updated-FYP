@@ -15,6 +15,11 @@ const SetAppointment = () => {
   const [doctorId, setDoctorId] = useState();
   const [doctorName, setDoctorName] = useState();
 
+  const fixTimezoneOffset = (date) => {
+    if (!date) return "";
+    return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toJSON();
+  };
+
   // Add a meeting
   const addAppointment = () => {
     if (newAppointment.need && doctorId && newAppointment.appointmentDate) {
@@ -25,7 +30,7 @@ const SetAppointment = () => {
         doctorName: doctorName,
         userId: userId,
         userName: user.name,
-        appointmentDate: newAppointment.appointmentDate,
+        appointmentDate: fixTimezoneOffset(newAppointment.appointmentDate),
       };
       //   console.log(myObj);
       axios

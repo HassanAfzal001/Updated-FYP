@@ -84,6 +84,20 @@ const AppointmentRequests = () => {
     }
   };
 
+  const formatAMPM = (date) => {
+    // var date = date.substr(0, 10);
+
+    // var hours = date.substr(0, 5);
+    console.log(date.substr(3, 4));
+    var hours = date.substr(0, 2);
+    var minutes = date.substr(3, 4);
+    var ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    var strTime = hours + ":" + minutes + " " + ampm;
+    return strTime;
+  };
+
   return (
     <div className="appointments-container">
       <h1>All Appointments</h1>
@@ -107,6 +121,7 @@ const AppointmentRequests = () => {
             {allAppointments?.length != 0 ? (
               allAppointments?.map((myObj, key) => {
                 var time = moment.utc(myObj.appointmentDate).format("HH:mm");
+                time = formatAMPM(time);
                 return (
                   <tr key={myObj._id}>
                     <td>{myObj.doctorName}</td>
